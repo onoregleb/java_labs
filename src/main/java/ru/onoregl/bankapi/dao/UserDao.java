@@ -21,7 +21,7 @@ public class UserDao {
         return user;
     }
 
-    public User findById(String id) {
+    public static User findById(String id) {
         User user = repository.get(id);
         if (user != null) {
             return user;
@@ -30,4 +30,4 @@ public class UserDao {
     }
 
 }
-}
+
