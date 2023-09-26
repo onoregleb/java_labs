@@ -20,10 +20,10 @@ public class UserController {
             return new ResponseEntity<>(service.createUser(requestBody), HttpStatus.CREATED);
         }
         @GetMapping(path = "/{isd}", produces = "application/json")
-        public ResponseEntity<User> findById(@PathVariable(value = "id") String id) {
+        public ResponseEntity findById(@PathVariable(value = "id") String id) {
             try {
                 return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
-            } catch (NotFoundException e) {
+            } catch (UserNotFoundException e) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         }

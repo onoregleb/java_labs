@@ -1,9 +1,11 @@
 package ru.onoregl.bankapi.dao;
 
-
+import ru.onoregl.bankapi.model.User;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 @Component
 public class UserDao {
