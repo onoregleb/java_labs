@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Component
 public class UserDao {
-    Map<String, User> repository = new HashMap<>();
+    static Map<String, User> repository = new HashMap<>();
 
     public User create(String firstName, String username, String password) {
         User user = new User();
