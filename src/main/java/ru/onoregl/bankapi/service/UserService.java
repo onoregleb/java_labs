@@ -4,9 +4,6 @@ package ru.onoregl.bankapi.service;
 import ru.onoregl.bankapi.dto.CreateUserDto;
 import ru.onoregl.bankapi.model.User;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class UserService {
 
     public User createUser(CreateUserDto createUserDto) {
