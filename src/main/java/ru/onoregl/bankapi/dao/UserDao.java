@@ -29,5 +29,11 @@ public class UserDao {
         throw new RuntimeException();
     }
 
+    public static void deleteUser(String id){
+        if (repository.containsKey(id)){
+            repository.remove(id);
+        }
+    }
+
 }
 
