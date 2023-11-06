@@ -5,8 +5,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.onoregl.bankapi.dao.UserDao;
 import ru.onoregl.bankapi.dto.CreateUserDto;
+import ru.onoregl.bankapi.model.Card;
 import ru.onoregl.bankapi.model.User;
 import ru.onoregl.bankapi.service.UserService;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/users")
@@ -41,6 +45,21 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+    }
+
+
+    @PutMapping(path = "/{username}/password")
+    public ResponseEntity<User> updatePassword(
+            @PathVariable(value = "username") String username,
+            @RequestBody Map<String, String> request
+    ) {
+        String newPassword = request.get("newPassword");
+        User updatedUser = service.updatePassword(username, newPassword);
+        if (updatedUser != null) {
+            return ResponseEntity.ok(updatedUser);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
 

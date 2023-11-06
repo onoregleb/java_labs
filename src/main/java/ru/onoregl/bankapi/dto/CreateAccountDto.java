@@ -1,17 +1,8 @@
-package ru.onoregl.bankapi.model;
+package ru.onoregl.bankapi.dto;
 
-public class Account {
-    private  String id;
+public class CreateAccountDto {
     private  String userid;
     private double balance ;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getUserid() {
         return userid;
