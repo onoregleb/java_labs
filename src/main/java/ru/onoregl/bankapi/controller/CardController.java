@@ -25,7 +25,7 @@ public class CardController {
         return ResponseEntity.status(HttpStatus.CREATED).body(card);
     }
 
-    @GetMapping(path = "/{isd}", produces = "application/json")
+    @GetMapping(path = "/{id}", produces = "application/json")
     public ResponseEntity<Card> findById(@PathVariable(value = "id") String cardId) {
         try {
             return new ResponseEntity<>(cardService.findById(cardId), HttpStatus.OK);

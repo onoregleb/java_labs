@@ -23,7 +23,7 @@ public class AccountController {
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
-    @GetMapping(path = "/{isd}", produces = "application/json")
+    @GetMapping(path = "/{accountId}", produces = "application/json")
     public ResponseEntity<Account> findById(@PathVariable(value = "accountId") String accountId) {
         try {
             return new ResponseEntity<>(accountService.findById(accountId), HttpStatus.OK);

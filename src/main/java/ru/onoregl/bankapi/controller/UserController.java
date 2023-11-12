@@ -27,7 +27,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
-    @GetMapping(path = "/{isd}", produces = "application/json")
+    @GetMapping(path = "/{id}", produces = "application/json")
     public ResponseEntity findById(@PathVariable(value = "id") String id) {
         try {
             return new ResponseEntity<>(UserDao.findById(id), HttpStatus.OK);

@@ -37,11 +37,6 @@ public class CardService {
 
     public Card findById(String cardId) {
         Card card = CardDao.findById(cardId);
-
-        if (card == null){
-            throw new UserNotFoundException("Account not found for accountId: " + cardId);
-        }
-
         return card;
     }
 
