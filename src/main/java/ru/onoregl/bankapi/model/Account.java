@@ -1,9 +1,14 @@
 package ru.onoregl.bankapi.model;
+import jakarta.persistence.*;
 
+
+@Entity
+@Table(name = "accounts")
 public class Account {
-    private  String id;
-    private  String userid;
-    private double balance ;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
 
     public String getId() {
         return id;
@@ -28,4 +33,12 @@ public class Account {
     public void setBalance(double balance) {
         this.balance = balance;
     }
+
+    @Column(name = "userid")
+    private String userid;
+
+    @Column(name = "balance")
+    private double balance;
+
+    // геттеры и сеттеры
 }

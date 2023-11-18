@@ -1,65 +1,52 @@
 package ru.onoregl.bankapi.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.onoregl.bankapi.controller.UserNotFoundException;
-import ru.onoregl.bankapi.dao.AccountDao;
-import ru.onoregl.bankapi.dao.UserDao;
-import ru.onoregl.bankapi.dto.CreateAccountDto;
 import ru.onoregl.bankapi.model.Account;
+import ru.onoregl.bankapi.model.User;
+import ru.onoregl.bankapi.repository.AccountRepository;
+import ru.onoregl.bankapi.repository.UserRepository;
 
-
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 
 @Service
 public class AccountService {
-    private AccountDao dao;
 
-    public AccountService(AccountDao dao) {
-        this.dao = dao;
+    private final AccountRepository accountRepository;
+    private final UserRepository userRepository;
+
+    @Autowired
+    public AccountService(AccountRepository accountRepository, UserRepository userRepository) {
+        this.accountRepository = accountRepository;
+        this.userRepository = userRepository;
     }
 
-    public Account createAccountForUser(CreateAccountDto createAccountDto) {
-        Account client = new Account();
-        client.setId(UUID.randomUUID().toString());
-        client.setUserid(createAccountDto.getUserid());
-        client.setBalance(createAccountDto.getBalance());
-        dao.create(createAccountDto.getUserid());
-        return client;
-    }
+    public Account create(String userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
 
-    public void deleteAccount(String AccountId){
-        AccountDao.deleteAccount(AccountId);
-    }
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
 
-    public Account changeAccountBalance(String accountId, double amount) {
-        Account account = AccountDao.findById(accountId);
-
-        if (account != null){
-            double newBalance = account.getBalance() + amount;
-            account.setBalance(newBalance);
-            AccountDao.updateAccount(account);
-        }
-        return account;
-    }
-
-    public Account findById(String accountId) {
-        Account account = AccountDao.findById(accountId);
-
-        if (account == null){
-            throw new UserNotFoundException("Account not found for accountId: " + accountId);
+            Account account = new Account();
+            account.setUserid(user.getId());
+            return accountRepository.save(account);
         }
 
-        return account;
+        return null;
     }
 
-    public List<Account> findByUserId(String userId) {
-        List <Account> accounts = AccountDao.findByUserId(userId);
+    public Account findById(Long id) {
+        return accountRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Аккаунт не найден"));
+    }
 
-        if (accounts == null){
-            throw new UserNotFoundException("Accounts not found for userId: " + userId);
-        }
+    public void deleteAccount(Long id) {
+        accountRepository.deleteById(id);
+    }
 
-        return accounts;
+    public List<Account> findByUserid(String userid) {
+        return accountRepository.findByUserid(userid);
     }
 }

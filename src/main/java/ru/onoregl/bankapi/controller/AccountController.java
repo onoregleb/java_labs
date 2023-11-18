@@ -8,11 +8,11 @@ import ru.onoregl.bankapi.model.Account;
 import ru.onoregl.bankapi.service.AccountService;
 
 import java.util.List;
-
 @RestController
 @RequestMapping("/api/v1/accounts")
 public class AccountController {
     private final AccountService accountService;
+
     public AccountController(AccountService accountService) {
         this.accountService = accountService;
     }
@@ -36,7 +36,7 @@ public class AccountController {
     public ResponseEntity<List<Account>> findByUserId(@PathVariable(value = "userId") String userId) {
         List<Account> userAccounts = accountService.findByUserId(userId);
 
-        if(userAccounts.isEmpty()){
+        if (userAccounts.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
         return ResponseEntity.status(HttpStatus.OK).body(userAccounts);
@@ -57,12 +57,11 @@ public class AccountController {
             @PathVariable(value = "accountId") String accountId,
             @RequestParam("amount") double amount) {
         Account updatedAccount = accountService.changeAccountBalance(accountId, amount);
-        {
-            if (updatedAccount != null){
-                return ResponseEntity.status(HttpStatus.OK).body(updatedAccount);
-            } else{
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
+
+        if (updatedAccount != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(updatedAccount);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 }

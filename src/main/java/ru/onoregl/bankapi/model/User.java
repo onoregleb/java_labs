@@ -1,9 +1,19 @@
 package ru.onoregl.bankapi.model;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Data;
+@Data
+@Entity
+@Table(name = "users")
+@Builder(setterPrefix = "with")
 public class User {
-    private  String id ;
-    private  String firstname ;
-    private  String username ;
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
+    private String firstName;
+    private String username;
+    @JsonIgnore
     private String password;
 
     public String getId() {
@@ -14,12 +24,12 @@ public class User {
         this.id = id;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirstName(String firstname) {
-        this.firstname = firstname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getUsername() {
@@ -36,9 +46,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public User() {
     }
 }
 
