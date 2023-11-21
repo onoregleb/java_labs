@@ -10,10 +10,14 @@ import lombok.Data;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id")
     private String id;
+    @Column(name = "firstname")
     private String firstName;
+    @Column(name = "username")
     private String username;
     @JsonIgnore
+    @Column(name = "password")
     private String password;
 
     public String getId() {

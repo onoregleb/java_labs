@@ -1,8 +1,18 @@
 package ru.onoregl.bankapi.model;
-
+import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Data;
+@Data
+@Entity
+@Table(name = "cards")
+@Builder(setterPrefix = "with")
 public class Card {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private  String id ;
+    @Column(name = "accountid")
     private String accountid ;
+    @Column(name = "userid")
     private  String userid ;
 
     public String getId() {

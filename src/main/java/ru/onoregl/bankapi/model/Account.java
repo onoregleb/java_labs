@@ -10,6 +10,12 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
+    @Column(name = "userid")
+    private String userid;
+
+    @Column(name = "balance")
+    private double balance;
+
     public String getId() {
         return id;
     }
@@ -34,11 +40,4 @@ public class Account {
         this.balance = balance;
     }
 
-    @Column(name = "userid")
-    private String userid;
-
-    @Column(name = "balance")
-    private double balance;
-
-    // геттеры и сеттеры
 }

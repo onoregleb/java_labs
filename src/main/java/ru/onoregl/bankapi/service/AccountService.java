@@ -7,7 +7,7 @@ import ru.onoregl.bankapi.model.User;
 import ru.onoregl.bankapi.repository.AccountRepository;
 import ru.onoregl.bankapi.repository.UserRepository;
 
-import javax.persistence.EntityNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
