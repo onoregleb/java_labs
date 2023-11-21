@@ -16,6 +16,7 @@ import java.util.Map;
 @RequestMapping("api/v1/users")
 public class UserController {
     private final UserService service;
+    private UserDao dao;
 
     public UserController(UserService service) {
         this.service = service;
@@ -30,7 +31,7 @@ public class UserController {
     @GetMapping(path = "/{id}", produces = "application/json")
     public ResponseEntity findById(@PathVariable(value = "id") String id) {
         try {
-            return new ResponseEntity<>(UserDao.findById(id), HttpStatus.OK);
+            return new ResponseEntity<>(dao.findById(id), HttpStatus.OK);
         } catch (UserNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -46,7 +47,6 @@ public class UserController {
         }
 
     }
-
 
     @PutMapping(path = "/{username}/password")
     public ResponseEntity<User> updatePassword(

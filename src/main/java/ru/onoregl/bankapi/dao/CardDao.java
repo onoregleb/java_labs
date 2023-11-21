@@ -1,53 +1,21 @@
 package ru.onoregl.bankapi.dao;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import ru.onoregl.bankapi.controller.UserNotFoundException;
 import ru.onoregl.bankapi.model.Card;
+import ru.onoregl.bankapi.model.User;
 
 import java.util.*;
 
-@Component
-public class CardDao {
-    static Map<String, Card> repository = new HashMap<>();
+@Repository
+public interface CardDao extends JpaRepository<Card, String> {
+    Optional<List<Card>> findCardsByUserId(String userId);
+    Optional<User> update(User user);
+    Optional<Card> create(String AccountId, String userId);
+    Optional<Card> findById(String cardId);
+    void delete(String cardId);
 
-    public static void deleteCard(String cardId) {
-        if (repository.containsKey(cardId)){
-            repository.remove(cardId);
-        } else {
-            throw new UserNotFoundException("Not found card with id: " + cardId);
-        }
-    }
-
-    public static Card findById(String cardId) {
-        Card card = repository.get(cardId);
-        if (card != null) {
-            return card;
-        }
-        throw new RuntimeException();
-    }
-
-    public Card create(String AccountId, String userId) {
-        Card card = new Card();
-        card.setId(UUID.randomUUID().toString());
-        card.setAccountid(AccountId);
-        card.setUserid(userId);
-        repository.put(card.getId(), card);
-        return card;
-    }
-
-    public List<Card> findCardsByUserId(String userId) {
-        List<Card> cardsByUserId = new ArrayList<>();
-
-        for (Card card : repository.values()) {
-            if (card.getUserid().equals(userId)) {
-                cardsByUserId.add(card);
-            }
-        }
-
-        if (cardsByUserId.isEmpty()) {
-            throw new UserNotFoundException("No cards found for userId: " + userId);
-        }
-
-        return cardsByUserId;
-    }
 }
+

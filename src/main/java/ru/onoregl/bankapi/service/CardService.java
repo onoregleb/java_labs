@@ -1,8 +1,10 @@
 package ru.onoregl.bankapi.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.onoregl.bankapi.controller.UserNotFoundException;
 import ru.onoregl.bankapi.dao.CardDao;
+import ru.onoregl.bankapi.dao.UserDao;
 import ru.onoregl.bankapi.dto.CreateCardDto;
 import ru.onoregl.bankapi.model.Card;
 
@@ -12,7 +14,8 @@ import java.util.UUID;
 @Service
 public class CardService {
 
-    private final CardDao dao;
+    @Autowired
+    private CardDao dao;
 
     public CardService(CardDao dao) {
         this.dao = dao;
@@ -24,24 +27,25 @@ public class CardService {
         card.setUserid(createCardDto.getUserId());
         card.setAccountid(createCardDto.getAccountId());
         dao.create(createCardDto.getAccountId(), createCardDto.getUserId());
+        dao.save(card);
         return card;
     }
 
         public void deleteCard(String CardId){
             try{
-                CardDao.deleteCard(CardId);
+                dao.delete(CardId);
             } catch (UserNotFoundException e){
 
             }
     }
 
     public Card findById(String cardId) {
-        Card card = CardDao.findById(cardId);
+        Card card = dao.findById(cardId).orElse(null);
         return card;
     }
 
     public List<Card> findCardsByUserId(String userId) {
-        return dao.findCardsByUserId(userId);
+        return dao.findCardsByUserId(userId).orElse(null);
     }
 
 }

@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = Config.class)
-@SpringBootTest
+@SpringBootTest(classes = {ru.onoregl.bankapi.Main.class})
 public final class MainTests {
 
 	@Autowired

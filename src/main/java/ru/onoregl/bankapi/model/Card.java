@@ -2,13 +2,16 @@ package ru.onoregl.bankapi.model;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Data
 @Entity
 @Table(name = "cards")
-@Builder(setterPrefix = "with")
+//@Builder(setterPrefix = "with")
 public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id")
     private  String id ;
     @Column(name = "accountid")
     private String accountid ;
@@ -38,4 +41,5 @@ public class Card {
     public void setUserid(String userid) {
         this.userid = userid;
     }
+
 }

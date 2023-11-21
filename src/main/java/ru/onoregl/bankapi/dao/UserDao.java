@@ -12,7 +12,7 @@ public interface UserDao extends JpaRepository<User, String> {
     Optional<User> update(User user);
     Optional<User> create(String firstName, String username, String password);
     Optional<User> findById(String id);
-    Optional<User> delete(String id);
+    void delete(String id);
 
 }
 

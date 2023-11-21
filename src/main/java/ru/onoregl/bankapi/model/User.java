@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "users")
-@Builder(setterPrefix = "with")
+//@Builder(setterPrefix = "with")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

@@ -1,7 +1,7 @@
 package ru.onoregl.bankapi.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.onoregl.bankapi.controller.UserNotFoundException;
 import ru.onoregl.bankapi.dao.UserDao;
 import ru.onoregl.bankapi.dto.CreateUserDto;
 import ru.onoregl.bankapi.model.User;
@@ -11,42 +11,29 @@ import java.util.UUID;
 @Service
 public class UserService {
 
+    @Autowired
     private UserDao dao;
 
-    public UserService(UserDao dao) {
-        this.dao = dao;
-    }
-
     public User createUser(CreateUserDto createUserDto) {
-        User client = new User();
-        client.setId(UUID.randomUUID().toString());
-        client.setUsername(createUserDto.getUsername());
-        client.setFirstName(createUserDto.getFirstname());
-        client.setPassword(createUserDto.getPassword());
-        dao.create(createUserDto.getFirstname(), createUserDto.getUsername(), createUserDto.getPassword());
-        return client;
+        User user = new User();
+        user.setId(UUID.randomUUID().toString());
+        user.setUsername(createUserDto.getUsername());
+        user.setFirstName(createUserDto.getFirstname());
+        user.setPassword(createUserDto.getPassword());
+        dao.save(user);
+        return user;
     }
 
     public void deleteUser(String userId){
-        try{
-            UserDao.deleteUser(userId);
-        } catch (UserNotFoundException e){
-
-        }
+        dao.deleteById(userId);
     }
 
     public User updatePassword(String username, String newPassword) {
-        try {
-            User user = dao.findByUsername(username);
-            if (user != null) {
-                user.setPassword(newPassword);
-                UserDao.update(user);
-                return user;
-            } else {
-                return null;
-            }
-        } catch (UserNotFoundException e) {
-            return null;
+        User user = dao.findByUsername(username).orElse(null);
+        if (user != null) {
+            user.setPassword(newPassword);
+            dao.save(user);
         }
+        return user;
     }
 }
