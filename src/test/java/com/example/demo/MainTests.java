@@ -11,7 +11,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import ru.onoregl.bankapi.model.User;
 import ru.onoregl.bankapi.config.Config;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -40,5 +42,24 @@ public final class MainTests {
 		User user = mapper.readValue(result.getResponse().getContentAsString(), User.class);
 		System.out.println("Password = " + user.getPassword());
 	}
+
+	@Test
+	void updatePassword() throws Exception {
+		String username = "admin";
+		String newPassword = "newPassword";
+
+		var result = mvc.perform(put("/api/v1/users/{username}/password", username)
+						.contentType(MediaType.APPLICATION_JSON)
+						.content("{\"newPassword\": \"" + newPassword + "\"}"))
+				.andExpect(status().isOk())
+				.andReturn();
+
+		ObjectMapper mapper = new ObjectMapper();
+		User updatedUser = mapper.readValue(result.getResponse().getContentAsString(), User.class);
+
+		assertEquals(newPassword, updatedUser.getPassword());
+		System.out.println("Password = " + updatedUser.getPassword());
+	}
+
 
 }
