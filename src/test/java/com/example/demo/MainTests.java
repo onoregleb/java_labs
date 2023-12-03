@@ -14,7 +14,6 @@ import ru.onoregl.bankapi.config.Config;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
@@ -35,7 +34,6 @@ public final class MainTests {
 								"  \"password\": \"admin\"\n" +
 								"}"))
 				.andExpect(status().isCreated())
-				//.andExpect(jsonPath("$.password").exists())
 				.andReturn();
 
 		ObjectMapper mapper = new ObjectMapper();

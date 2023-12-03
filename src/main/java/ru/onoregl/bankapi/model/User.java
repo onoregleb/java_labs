@@ -19,7 +19,6 @@ public class User {
     private String firstName;
     @Column(name = "username")
     private String username;
-    //@JsonIgnore
     @Column(name = "password", columnDefinition = "VARCHAR_IGNORECASE")
     private String password;
 
