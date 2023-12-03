@@ -56,7 +56,9 @@ public final class MainTests {
 		User updatedUser = mapper.readValue(result.getResponse().getContentAsString(), User.class);
 
 		assertEquals(newPassword, updatedUser.getPassword());
-		System.out.println("Password = " + updatedUser.getPassword());
+		System.out.println("firstname = " + updatedUser.getFirstName());
+		System.out.println("username = " + updatedUser.getUsername());
+		System.out.println("password = " + updatedUser.getPassword());
 	}
 
 
