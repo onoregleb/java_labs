@@ -12,6 +12,7 @@ import ru.onoregl.bankapi.model.User;
 import ru.onoregl.bankapi.config.Config;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
@@ -25,16 +26,19 @@ public final class MainTests {
 	@Test
 	void createUser() throws Exception {
 		var result = mvc.perform(post("/api/v1/users")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content("{\n" +
-						"\t\"firstName\": \"Tom Riddle\",\n" +
-						"\t\"username\": \"admin\",\n" +
-						"\t\"password\": \"admin\"\n" +
-						"}".getBytes())  // Set the request body as byte array
-		).andExpect(status().isCreated()).andReturn();
+						.contentType(MediaType.APPLICATION_JSON)
+						.content("{\n" +
+								"  \"firstname\": \"Tom Riddle\",\n" +
+								"  \"username\": \"admin\",\n" +
+								"  \"password\": \"admin\"\n" +
+								"}"))
+				.andExpect(status().isCreated())
+				//.andExpect(jsonPath("$.password").exists())
+				.andReturn();
 
 		ObjectMapper mapper = new ObjectMapper();
 		User user = mapper.readValue(result.getResponse().getContentAsString(), User.class);
 		System.out.println("Password = " + user.getPassword());
 	}
+
 }

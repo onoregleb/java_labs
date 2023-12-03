@@ -11,19 +11,19 @@ import lombok.NoArgsConstructor;
 public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id")
-    private  String id ;
+    @Column(name = "cardId")
+    private  String cardId ;
     @Column(name = "accountid")
     private String accountid ;
     @Column(name = "userid")
     private  String userid ;
 
     public String getId() {
-        return id;
+        return cardId;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.cardId = id;
     }
 
     public String getAccountid() {

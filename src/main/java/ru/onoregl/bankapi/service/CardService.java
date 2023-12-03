@@ -26,14 +26,13 @@ public class CardService {
         card.setId(UUID.randomUUID().toString());
         card.setUserid(createCardDto.getUserId());
         card.setAccountid(createCardDto.getAccountId());
-        dao.create(createCardDto.getAccountId(), createCardDto.getUserId());
         dao.save(card);
         return card;
     }
 
         public void deleteCard(String CardId){
             try{
-                dao.delete(CardId);
+                dao.deleteByCardId(CardId);
             } catch (UserNotFoundException e){
 
             }
@@ -45,7 +44,7 @@ public class CardService {
     }
 
     public List<Card> findCardsByUserId(String userId) {
-        return dao.findCardsByUserId(userId).orElse(null);
+        return dao.findByUserid(userId);
     }
 
 }

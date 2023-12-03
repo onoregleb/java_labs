@@ -1,5 +1,6 @@
 package ru.onoregl.bankapi.service;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.onoregl.bankapi.controller.UserNotFoundException;
@@ -26,7 +27,7 @@ public class AccountService {
         client.setId(UUID.randomUUID().toString());
         client.setUserid(createAccountDto.getUserid());
         client.setBalance(createAccountDto.getBalance());
-        dao.create(createAccountDto.getUserid());
+        dao.save(client);
         return client;
     }
 
@@ -34,14 +35,16 @@ public class AccountService {
         dao.deleteById(AccountId);
     }
 
+    @Transactional
     public Account changeAccountBalance(String accountId, double amount) {
         Account account = dao.findById(accountId).orElse(null);
 
-        if (account != null){
+        if (account != null) {
             double newBalance = account.getBalance() + amount;
             account.setBalance(newBalance);
-            dao.update(account);
+            dao.updateBalanceById(accountId, newBalance);
         }
+
         return account;
     }
 
@@ -56,7 +59,7 @@ public class AccountService {
     }
 
     public List<Account> findByUserId(String userId) {
-        List <Account> accounts = dao.findByUserid(userId).orElse(null);
+        List <Account> accounts = dao.findByUserid(userId);
 
         if (accounts == null){
             throw new UserNotFoundException("Accounts not found for userId: " + userId);

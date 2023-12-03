@@ -3,21 +3,24 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
+
 @Data
 @Entity
 @Table(name = "users")
 //@Builder(setterPrefix = "with")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id")
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "id", columnDefinition = "VARCHAR_IGNORECASE")
     private String id;
     @Column(name = "firstname")
     private String firstName;
     @Column(name = "username")
     private String username;
-    @JsonIgnore
-    @Column(name = "password")
+    //@JsonIgnore
+    @Column(name = "password", columnDefinition = "VARCHAR_IGNORECASE")
     private String password;
 
     public String getId() {

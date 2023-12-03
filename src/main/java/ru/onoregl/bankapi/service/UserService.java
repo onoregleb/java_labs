@@ -16,7 +16,7 @@ public class UserService {
 
     public User createUser(CreateUserDto createUserDto) {
         User user = new User();
-        user.setId(UUID.randomUUID().toString());
+        //user.setId(UUID.randomUUID().toString());
         user.setUsername(createUserDto.getUsername());
         user.setFirstName(createUserDto.getFirstname());
         user.setPassword(createUserDto.getPassword());

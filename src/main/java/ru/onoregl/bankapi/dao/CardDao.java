@@ -11,11 +11,10 @@ import java.util.*;
 
 @Repository
 public interface CardDao extends JpaRepository<Card, String> {
-    Optional<List<Card>> findCardsByUserId(String userId);
-    Optional<User> update(User user);
-    Optional<Card> create(String AccountId, String userId);
-    Optional<Card> findById(String cardId);
-    void delete(String cardId);
+    List<Card> findByUserid(String userid);
 
+    Optional<Card> findByCardId(String cardId);
+
+    void deleteByCardId(String cardId);
 }
 

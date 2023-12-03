@@ -1,8 +1,15 @@
 package ru.onoregl.bankapi.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class CreateUserDto {
+    @JsonProperty("firstname")
     private String firstname;
+
+    @JsonProperty("username")
     private String username;
+
+    @JsonProperty("password")
     private String password;
 
     public String getFirstname() {
